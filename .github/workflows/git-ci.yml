@@ -29,3 +29,13 @@ jobs:
     # Run the exact command you ran locally to compile and test
     - name: Build and Test
       run: mvn -B clean package
+
+    # Save the test reports for download or reference
+    - name: Upload Test Reports
+      uses: actions/upload-artifact@v4
+      if: always() # This forces it to save the report even if a test fails
+      with:
+        name: maven-test-reports
+        path: |
+          target/surefire-reports/
+          target/site/jacoco/
